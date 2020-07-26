@@ -2,3 +2,6 @@
 
 
 phpinfo();
+
+
+echo "Hello world";
