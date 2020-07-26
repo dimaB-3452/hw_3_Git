@@ -1,0 +1,4 @@
+.idea
+.docker/postgres/var/lib/postgresql/data
+
+/somediredtory/newdir/dir/

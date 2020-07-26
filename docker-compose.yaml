@@ -1,0 +1,40 @@
+version: "3"
+networks:
+  custom-app:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+    - "80:80"
+    volumes:
+    - .:/var/www/html
+    networks:
+      - custom-app
+
+  postgres:
+    image: "library/postgres:12.1"
+    ports:
+    - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_DB=docker
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - .docker/postgres/var/lib/postgresql/data:/var/libpostgresql/data
+    networks:
+      - custom-app
+
+  adminer:
+    image: "library/adminer:4.7.5"
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - custom-app
